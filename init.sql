@@ -1,7 +1,4 @@
-CREATE DATABASE Payslip_db;
-
-\c Payslip_db
-
+-- \c Payslip_db  -- Not required in Docker init scripts if POSTGRES_DB is set to Payslip_db
 
 CREATE TABLE IF NOT EXISTS payslips (
     id SERIAL PRIMARY KEY,
@@ -30,8 +27,7 @@ CREATE TABLE IF NOT EXISTS payslips (
     CONSTRAINT unique_employee_month_year UNIQUE (employee_id, month_year)
 );
 
-
-CREATE INDEX idx_employee_id ON payslips (employee_id);
-CREATE INDEX idx_month_year ON payslips (month_year);
-CREATE INDEX idx_created_at ON payslips (created_at);
-
+-- Indexes for performance
+CREATE INDEX IF NOT EXISTS idx_employee_id ON payslips (employee_id);
+CREATE INDEX IF NOT EXISTS idx_month_year ON payslips (month_year);
+CREATE INDEX IF NOT EXISTS idx_created_at ON payslips (created_at);
